@@ -1,5 +1,11 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "defaultSeverity": "warning",
+
+  "rules": {
+    "quotemark": [true, "single", "jsx-double"],
+    "no-default-export": true
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
