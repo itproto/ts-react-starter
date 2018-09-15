@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "build/dist",
-    "module": "es2015",
-    "target": "es2015",
+
     "moduleResolution": "node",
-    "lib": ["es2016", "dom"],
+
+    "module": "esnext",
+    "target": "es2015",
+    "lib": ["es2017", "dom"],
+
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -22,7 +25,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "removeComments": false
   },
   "include": ["src/**/*"],
   "exclude": [

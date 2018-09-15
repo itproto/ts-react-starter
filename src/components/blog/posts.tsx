@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IPost } from './';
+import { IPost } from '@src/components/blog';
 
 export interface IPostsProps {
   label: string;
