@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { get, values } from 'lodash';
 import { ReactHTML } from 'react';
-import { Loadable } from 'react-loadable';
 const NotFoundInChunk = () => <div>{} not found in chunk</div>;
 export type ReactCompAll = keyof ReactHTML;
 const isReactComponentClass = (val: CodeChunk) => {
@@ -18,10 +17,6 @@ const getFirstReactComponentInChunk = (chunk: CodeChunk) => {
 type CodeChunk = any;
 type ReactTempElement = any;
 
-function Loading() {
-  return <div>Loading...</div>;
-}
-
 export const loadComponent = async (
   path?: string,
   compName?: string
@@ -29,7 +24,6 @@ export const loadComponent = async (
   let chunk: CodeChunk;
   switch (path) {
     case 'blog/posts':
-      console.info(a);
       chunk = await import(/* webpackChunkName: "blog-posts" */
       `@src/components/blog/posts`);
       break;
