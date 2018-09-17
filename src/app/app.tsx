@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './app.css';
 import { loadComponent } from '@src/components/async-load/load-component';
+import { ControRoom } from '@src/components/sample/components/control-room';
 // import { Posts } from @src/components/blog/posts';
 
 interface IState {
@@ -42,6 +43,7 @@ export class App extends React.Component<{}, IState> {
       <div className="App">
         {component ? React.createElement(component) : null}
         <button onClick={this.loadPosts}>Load</button>
+        <ControRoom />
       </div>
     );
   }

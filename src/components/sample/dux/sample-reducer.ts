@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux';
 import { IAction } from '@src/app/dux';
+import { incrementCounter } from '@src/components/sample/dux/sample-actions';
 
 export interface ISampleState {
   counter: number;
@@ -17,8 +18,10 @@ export const reducer = (
   action: ReducerAction
 ): ISampleState => {
   const { type, payload: val = 1 } = action;
+  const a = incrementCounter;
+  console.info(a.name);
   switch (type) {
-    case 'INC':
+    case incrementCounter.name:
       return {
         ...state,
         counter: state.counter + val
