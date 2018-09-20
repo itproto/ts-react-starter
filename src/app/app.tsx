@@ -2,6 +2,8 @@ import * as React from 'react';
 import './app.css';
 import { loadComponent } from '@src/components/async-load/load-component';
 import { ControRoom } from '@src/components/sample/components/control-room';
+import { FrameTest } from '@src/components/frame-test/frame-test';
+// import { FrameTest } from '@src/components/frame-test/frame-test';
 // import { Posts } from @src/components/blog/posts';
 
 interface IState {
@@ -25,7 +27,7 @@ export class App extends React.Component<{}, IState> {
       component
     });
   };
-  async componentDidMount() {
+  async foo() {
     const jsonLayout = (await fetch('http://localhost:9000/layout').then(r =>
       r.json()
     )) as ILayoutItem[];
@@ -44,6 +46,7 @@ export class App extends React.Component<{}, IState> {
         {component ? React.createElement(component) : null}
         <button onClick={this.loadPosts}>Load</button>
         <ControRoom />
+        {<FrameTest />}
       </div>
     );
   }

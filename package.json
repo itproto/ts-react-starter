@@ -21,6 +21,11 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
+  "proxy": {
+    "/foo": {
+      "target": "http://localhost:8080"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",

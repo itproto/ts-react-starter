@@ -1,0 +1,11 @@
+.frmContainer {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+}
+
+.makeAbsolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
