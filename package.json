@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/html2canvas": "0.0.33",
     "@types/lodash": "^4.14.116",
     "@types/react-loadable": "^5.4.1",
     "@types/redux-actions": "^2.3.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "lodash": "^4.17.11",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",

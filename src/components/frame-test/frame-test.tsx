@@ -3,6 +3,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './styles.css';
 
+import * as html2canvas from 'html2canvas';
+
 export class FrameTest extends React.Component<any, any> {
   state: any = {
     myTop: 0,
@@ -29,7 +31,7 @@ export class FrameTest extends React.Component<any, any> {
     const el = e.srcElement;
     console.info('amazing', el);
   };
-  onFrameLoad = (props: any[]) => {
+  onFrameLoad = async (props: any[]) => {
     console.info(props);
     const frameBody = ReactDOM.findDOMNode(this.frame) as any;
     const doc = frameBody.contentDocument as Element;
@@ -39,21 +41,26 @@ export class FrameTest extends React.Component<any, any> {
       x: 0,
       y: 0
     };
+
+    let last;
     comps.forEach((c: any) => {
       c.style.backgroundColor = '#ff0000';
       c.addEventListener('click', this.onH1Click);
       rect = c.getBoundingClientRect();
-
+      last = c;
       // console.info(c.style.backgroundColor);
     });
+    const screenshot = await html2canvas((last as any) as HTMLElement);
     this.setState({
       myTop: rect.y,
-      myLeft: rect.x
+      myLeft: rect.x,
+      screenshot
     });
   };
 
   render() {
-    const { myTop, myLeft } = this.state;
+    const { myTop, myLeft, screenshot } = this.state;
+    console.info(screenshot);
     return (
       <div className="frmContainer">
         <iframe
@@ -73,6 +80,8 @@ export class FrameTest extends React.Component<any, any> {
             Here we are
           </div>
         </div>
+
+        {screenshot ? <img src={screenshot.toDataURL()} /> : null}
       </div>
     );
   }
