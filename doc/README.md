@@ -20,3 +20,12 @@ prefetch(MyComponent, [
     }
 ])
 ```
+
+# FEEDBACK
+
+- show rich popup on click `sweetalert`
+- generate screnshot wit `html2canvas`
+- draw over image `react-sketch`
+- render anchors like in `intro apps`
+- show description (help) on hover
+- show comment field and comments thread in popup
