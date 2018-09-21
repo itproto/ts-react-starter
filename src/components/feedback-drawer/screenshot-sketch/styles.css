@@ -1,0 +1,13 @@
+.skreenshotSketch {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+.sketchTools {
+}
+.sketchFieldContainer {
+  background: white;
+  position: relative;
+  flex: 1;
+  overflow: auto;
+}

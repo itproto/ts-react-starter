@@ -2,16 +2,14 @@ import * as React from 'react';
 const { default: Drawer } = require('rc-drawer');
 import 'rc-drawer/assets/index.css';
 import './styles.css';
-import * as html2canvas from 'html2canvas';
-const { SketchField, Tools } = require('react-sketch');
+import { ScreenshotSketch } from '@src/components/feedback-drawer/screenshot-sketch/screenshot-sketch';
 
 interface IFeedbackDrawerProps {
-  selectedElement?: any;
+  selectedElement?: HTMLElement;
 }
 
 type IState = {
   open: boolean;
-  screenshot: any;
 };
 
 export class FeedbackDrawer extends React.Component<
@@ -19,28 +17,7 @@ export class FeedbackDrawer extends React.Component<
   IState
 > {
   state: IState = {
-    open: false,
-    screenshot: undefined
-  };
-  private _sketch: any;
-  setSketchRef = (ref: any) => {
-    this._sketch = ref;
-    this.updateSketch();
-  };
-
-  updateSketch = () => {
-    if (!this._sketch || !this.state.screenshot) {
-      return;
-    }
-    // https://github.com/btcrs/feedback/blob/10d4a7f9ac5c8b9fd1fe08220820d6907f097ef6/src/components/image.jsx
-    this._sketch.clear();
-    this._sketch.setBackgroundFromDataUrl(this.state.screenshot.toDataURL(), {
-      stretched: false,
-      stretchedX: false,
-      stretchedY: false,
-      originX: 'left',
-      originY: 'top'
-    });
+    open: false
   };
 
   // TODO: use only selectedElement instead of both
@@ -51,7 +28,7 @@ export class FeedbackDrawer extends React.Component<
     }
 
     const { dataset } = selectedElement;
-    const { screenshot } = this.state;
+
     return (
       <Drawer
         onChange={this.onChange}
@@ -61,38 +38,27 @@ export class FeedbackDrawer extends React.Component<
         width="30vw"
       >
         <h3>Selected component {dataset.tip} </h3>
-        <div>{screenshot && <img src={screenshot.toDataURL()} />}</div>
         <textarea
           placeholder="Enter your comment..."
           style={{ width: '100%' }}
           cols={2}
           rows={10}
         />
-        <SketchField
-          ref={(ref: any) => this.setSketchRef(ref)}
-          style={{ width: '100%', height: 100 }}
-          height="250px"
-          tool={Tools.Pencil}
-          lineColor="red"
-          lineWidth={3}
-          className="sketchField"
-        />
+        <ScreenshotSketch selectedElement={selectedElement} />
         <p>Component Description</p>
       </Drawer>
     );
   }
+
   async componentDidUpdate(nextProps: IFeedbackDrawerProps) {
     const { selectedElement } = this.props;
     if (selectedElement !== nextProps.selectedElement) {
-      const screenshot = await html2canvas(selectedElement);
       this.setState({
-        open: true,
-        screenshot
+        open: selectedElement !== undefined
       });
-
-      this.updateSketch();
     }
   }
+
   onChange = (bool: boolean) => {
     console.log(bool);
   };

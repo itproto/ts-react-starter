@@ -30,3 +30,15 @@ prefetch(MyComponent, [
 - render anchors like in `intro apps`
 - show description (help) on hover
 - show comment field and comments thread in popup
+- get access to redux state
+
+# Prefetch
+
+- component contains information about targetProperty, actionMethod and parameters
+- when parameters change - method re-init actionMethod
+- when targetProperty has changed? It need to be changed to some flag!
+
+1. <Component targetProperty={undefined} parmater={1}> => load once
+2. <Component targetProperty={[1, 2, 3]} parmater={1}> => loaded
+3. Programatically clear <Component targetProperty={undefined} parmater={1}>
+4. How do I know to reload? (track that property was set, but get updated to undefined)

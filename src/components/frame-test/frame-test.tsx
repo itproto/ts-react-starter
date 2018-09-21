@@ -77,10 +77,11 @@ export class FrameTest extends React.Component<any, any> {
   render() {
     const { meta } = this.state;
 
+    const {onElementSelect, ...iframeProps} = this.props;
+
     return (
       <div className="frmContainer">
         <iframe
-          allowTransparency={true}
           frameBorder={1}
           sandbox="allow-scripts allow-same-origin"
           className="makeAbsolute"
@@ -89,7 +90,7 @@ export class FrameTest extends React.Component<any, any> {
           ref={frame => {
             this.frame = frame;
           }}
-          {...this.props}
+          {...iframeProps}
         />
 
         {meta && this.renderOverly()}
