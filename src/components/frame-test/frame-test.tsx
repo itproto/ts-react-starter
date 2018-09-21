@@ -3,23 +3,31 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './styles.css';
 
-import * as html2canvas from 'html2canvas';
+export const Badge: React.SFC<any> = props => {
+  const { element, onSelect } = props;
+  const { idx, domRect } = props;
+
+  const onClickHandler = () => {
+    onSelect(element);
+  };
+
+  return (
+    <span
+      onClick={onClickHandler}
+      style={{ top: domRect.top, left: domRect.left - 8 }}
+      className="introjs-helperNumberLayer"
+    >
+      {idx}
+    </span>
+  );
+};
 
 export class FrameTest extends React.Component<any, any> {
-  state: any = {
-    myTop: 0,
-    myLeft: 0
-  };
+  state: any = {};
 
   frame: any;
 
-  handleIncrement = () => {
-    this.setState({ count: this.state.count + 1 });
-  };
-
   componentDidMount() {
-    // const node = ReactDOM.findDOMNode(this.frame);
-    // console.info(this.frame);
     this.frame.addEventListener('load', this.onFrameLoad);
   }
 
@@ -35,32 +43,40 @@ export class FrameTest extends React.Component<any, any> {
     console.info(props);
     const frameBody = ReactDOM.findDOMNode(this.frame) as any;
     const doc = frameBody.contentDocument as Element;
-    // const $h1 = doc.querySelector('h1')!;
     const comps = doc.querySelectorAll('[data-tip]')!;
-    let rect = {
-      x: 0,
-      y: 0
-    };
 
-    let last;
-    comps.forEach((c: any) => {
-      c.style.backgroundColor = '#ff0000';
-      c.addEventListener('click', this.onH1Click);
-      rect = c.getBoundingClientRect();
-      last = c;
-      // console.info(c.style.backgroundColor);
+    const meta = Array.from(comps).map((element: any, idx: number) => {
+      // c.style.backgroundColor = '#ff0000';
+      // c.addEventListener('click', this.onH1Click);
+
+      return {
+        domRect: element.getBoundingClientRect(),
+        name: element.dataset.tip,
+        idx: idx + 1,
+        element
+      };
     });
-    const screenshot = await html2canvas((last as any) as HTMLElement);
+
+    // const screenshot = await html2canvas((last as any) as HTMLElement);
     this.setState({
-      myTop: rect.y,
-      myLeft: rect.x,
-      screenshot
+      meta
     });
   };
 
+  renderOverly = () => {
+    const { meta } = this.state;
+    const { onElementSelect } = this.props;
+    return (
+      <div className="makeAbsolute">
+        {meta.map((el: any) => (
+          <Badge onSelect={onElementSelect} key={el.name} {...el} />
+        ))}
+      </div>
+    );
+  };
   render() {
-    const { myTop, myLeft, screenshot } = this.state;
-    console.info(screenshot);
+    const { meta } = this.state;
+
     return (
       <div className="frmContainer">
         <iframe
@@ -75,13 +91,8 @@ export class FrameTest extends React.Component<any, any> {
           }}
           {...this.props}
         />
-        <div className="makeAbsolute">
-          <div className="makeAbsolute" style={{ top: myTop, left: myLeft }}>
-            Here we are
-          </div>
-        </div>
 
-        {screenshot ? <img src={screenshot.toDataURL()} /> : null}
+        {meta && this.renderOverly()}
       </div>
     );
   }

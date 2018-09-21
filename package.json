@@ -9,6 +9,7 @@
     "@types/redux-actions": "^2.3.0",
     "html2canvas": "^1.0.0-alpha.12",
     "lodash": "^4.17.11",
+    "rc-drawer": "^1.7.6",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-loadable": "^5.5.0",

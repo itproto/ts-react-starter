@@ -23,6 +23,7 @@ prefetch(MyComponent, [
 
 # FEEDBACK
 
+- inspired by `intro` https://github.com/usablica/intro.js
 - show rich popup on click `sweetalert`
 - generate screnshot wit `html2canvas`
 - draw over image `react-sketch`
