@@ -77,7 +77,7 @@ export class FrameTest extends React.Component<any, any> {
   render() {
     const { meta } = this.state;
 
-    const {onElementSelect, ...iframeProps} = this.props;
+    const { onElementSelect, ...iframeProps } = this.props;
 
     return (
       <div className="frmContainer">
@@ -86,7 +86,7 @@ export class FrameTest extends React.Component<any, any> {
           sandbox="allow-scripts allow-same-origin"
           className="makeAbsolute"
           style={{ width: 1000, height: 1000 }}
-          src="api/foo"
+          src="api"
           ref={frame => {
             this.frame = frame;
           }}
