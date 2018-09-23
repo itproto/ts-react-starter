@@ -42,3 +42,49 @@ prefetch(MyComponent, [
 2. <Component targetProperty={[1, 2, 3]} parmater={1}> => loaded
 3. Programatically clear <Component targetProperty={undefined} parmater={1}>
 4. How do I know to reload? (track that property was set, but get updated to undefined)
+
+# Comments
+
+## Editor wysiwyg
+
+- supports markdown
+- rich but simple
+
+1. Options
+   > https://github.com/JefMari/awesome-wysiwyg
+
+- `quill` - most popular, react-quill (-)markdown
+- `pell` - pixel-simple, mdown
+- `medium-editor` - hovering tools, table plugin
+- `tui` -super-rich, mdown
+- `tinymce` - typescript, too rich
+- 'https://react-rte.org/demo`
+
+> quill
+
+2. Choice
+
+## Persitence
+
+- use `json-server` tomodel commments
+
+### DB
+
+- embed., simple, nosql
+- rest backend + ORM?
+- DB with rest backend
+
+Options
+
+- `lowdb` - flat file
+- `LokiDb` in memory
+- `NeDB` - mongo-like, popular
+
+### Server REST
+
+- express?
+- automatic
+
+#### Idea
+
+- based on `json-server` = cli + tingo
