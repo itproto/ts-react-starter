@@ -6,6 +6,8 @@
   "scripts": {
     "start": "json-server --port 9000 --watch data/db.json",
     "proxy": "ts-node proxy.ts",
+    "feedback-frame": "ts-node proxy.ts",
+    "gen-vscode-snippets": "ts-node snip-templates/cli",
     "quicktype": "quicktype  http://localhost:9000/comments -o temp/comments.ts --just-types --telemetry disable"
   },
   "keywords": [],
