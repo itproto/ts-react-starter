@@ -1,5 +1,23 @@
 import { isArray, isFunction } from 'lodash';
 
+// #region OPTIONS_INPUTs
+/**
+ * Options can be entered using different foormats
+ *
+ * 1. As string[][]
+ * [['foo', 'getFoo', 'bar']]
+ * 2. Simple string[]
+ * ['foo', 'getFoo', 'bar']
+ * 3. Or nicely typed as IReduxPrefetchOption[]
+ * [
+ *  {
+ *    propertyName: 'foo',
+ *    prefetchMethodName: 'getFoo',
+ *    paramNames: ['bar']
+ *  }
+ * ]
+ * Option 1, 2 is transformed to 3
+ */
 export interface IReduxPrefetchOption<P extends object = any, K = keyof P> {
   propertyName: K;
   prefetchMethodName: K;
@@ -7,9 +25,13 @@ export interface IReduxPrefetchOption<P extends object = any, K = keyof P> {
   comparator?: (oldVal: P, newVal: P) => boolean;
 }
 
-export type PrefetchOptions<P extends object = any, K = keyof P> =
+type PrefetchOptions<P extends object = any, K = keyof P> =
   | K[]
   | IReduxPrefetchOption<P, K>;
+
+export type OptionsInput<P extends object> =
+  | Array<PrefetchOptions<P>>
+  | PrefetchOptions<P>;
 
 const converArrayToOption = <P extends object = any, K = keyof P>(
   option: K[]
@@ -20,24 +42,6 @@ const converArrayToOption = <P extends object = any, K = keyof P>(
     prefetchMethodName: prefetchMethodName,
     paramNames: paramNames
   };
-};
-
-export const toTypedOptions = <P extends object = any, K = keyof P>(
-  options: PrefetchOptions<P, K>[]
-): IReduxPrefetchOption<P, K>[] => {
-  if (!isArray(options[0])) {
-    return options as IReduxPrefetchOption<P, K>[];
-  }
-
-  const stringOptions = options as Array<K[]>;
-  return stringOptions.map(converArrayToOption);
-};
-
-export const getOptionPropertyNames = <P extends object = any, K = keyof P>(
-  option: IReduxPrefetchOption<P, K>
-) => {
-  const { propertyName, prefetchMethodName, paramNames = [] } = option;
-  return [propertyName, prefetchMethodName, ...paramNames];
 };
 
 export interface IReduxPrefetchOptionValue<P> {
@@ -52,6 +56,28 @@ export const isOptionValid = <P extends object>(
 ): boolean => {
   return option && isFunction(props[option.prefetchMethodName]);
 };
+
+export const toTypedOptions = <P extends object = any, K = keyof P>(
+  srcOptions: OptionsInput<P>
+): IReduxPrefetchOption<P, K>[] => {
+  const options = isArray(srcOptions[0]) ? 
+  if (!isArray(options[0])) {
+    return options as IReduxPrefetchOption<P, K>[];
+  }
+
+  const stringOptions = options as Array<K[]>;
+  return stringOptions.map(converArrayToOption);
+};
+// #endregion
+
+export const getOptionPropertyNames = <P extends object = any, K = keyof P>(
+  option: IReduxPrefetchOption<P, K>
+) => {
+  const { propertyName, prefetchMethodName, paramNames = [] } = option;
+  return [propertyName, prefetchMethodName, ...paramNames];
+};
+
+
 
 export const getOptionValues = <P extends object>(
   props: P,

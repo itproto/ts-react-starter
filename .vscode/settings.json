@@ -1,0 +1,5 @@
+{
+  "cucumberautocomplete.steps": ["specs/step-defs/**/*.ts"],
+  "cucumberautocomplete.syncfeatures": "specs/features/**/*.feature",
+  "cucumberautocomplete.strictGherkinCompletion": true
+}

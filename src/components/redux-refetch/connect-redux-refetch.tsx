@@ -1,16 +1,21 @@
 import * as React from 'react';
 
 import {
-  PrefetchOptions,
   toTypedOptions,
   areValuesReady,
   optionsReadyToPrefetch,
-  prefetchOption
-} from './option-utils';
+  prefetchOption,
+  OptionsInput
+} from '@src/components/redux-refetch/refetch-option-utils';
 
-export const connectReduxRefetch = (srcOptions: PrefetchOptions[]) => (
-  Component: React.ComponentType | any
-) => {
+/*
+interface IWithRefetch {
+    isPrefetching: boolean;
+}*/
+
+export const connectReduxRefetch = <P extends object = any>(
+  srcOptions: OptionsInput<P>
+) => (Component: React.ComponentType) => {
   const options = toTypedOptions(srcOptions);
   return class WithRefetch<R extends object = any> extends React.Component<R> {
     requested = new Map();
@@ -18,7 +23,7 @@ export const connectReduxRefetch = (srcOptions: PrefetchOptions[]) => (
       // init prefetch for not ready options with ready params
       this.prefetchReadyOptions();
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
       const { props, requested } = this;
 
       //1. remove fetched

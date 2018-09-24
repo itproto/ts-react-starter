@@ -23,7 +23,11 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "spec": "npm run cucum-run && npm run cucum-report",
+    "cucum-run": "TS_NODE_PROJECT=./specs/tsconfig.json cucumber-js specs/features/**/*.feature --require specs/step-defs/**/*.ts --require spec/hooks/**/*.ts  --require-module ts-node/register --format json:specs/reports/out/cucumber-report.json --format summary",
+    "cucum-report": "TS_NODE_PROJECT=./specs/tsconfig.json ts-node specs/reports/cucumber-html-reporter.ts",
+    "cucum-advance": "cucumber-js features/**/*.feature --logLevel=error --require step-definitions/**/*.ts --require hooks/**/*.ts  --require-module ts-node/register --format-options '{\"snippetInterface\": \"async-await\"}' --format json:reports/cucumber-report.json --format summary"
   },
   "proxy": {
     "/": {
@@ -31,13 +35,20 @@
     }
   },
   "devDependencies": {
+    "@types/chai": "^4.1.5",
+    "@types/cucumber": "^4.0.4",
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
     "@types/react-redux": "^6.0.9",
     "@types/webpack-env": "^1.13.6",
+    "chai": "^4.1.2",
+    "cucumber": "^5.0.1",
+    "cucumber-html-reporter": "^4.0.4",
+    "jest": "^23.6.0",
     "redux-devtools-extension": "^2.13.5",
+    "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
   }
 }
