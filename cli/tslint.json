@@ -1,9 +1,0 @@
-{
-  "extends": ["tslint-config-prettier"],
-  "defaultSeverity": "warning",
-
-  "rules": {
-    "quotemark": [true, "single", "jsx-double"],
-    "no-default-export": true
-  }
-}

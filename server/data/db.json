@@ -1,16 +1,31 @@
 {
-  "posts": [
-    { "id": 1, "title": "Post1", "author": "typicode" },
-    { "id": 2, "title": "Post2", "author": "typicode" },
-    { "id": 3, "title": "Post3", "author": "typicode" },
-    { "id": 4, "title": "Post4", "author": "typicode" },
-    { "id": 5, "title": "Post5", "author": "typicode" }
-  ],
-  "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
-  "profile": { "name": "typicode" },
-  "layout": [
+  "products": [
     {
-      "path": "blog/posts"
+      "name": "Apple iPhone 6s",
+      "color": "Anthracite",
+      "price": 769
+    },
+    {
+      "name": "Samsung Galaxy S8",
+      "color": "Midnight Black",
+      "price": 569
+    },
+    {
+      "name": "Huawei P9",
+      "color": "Mystic Silver",
+      "price": 272
+    }
+  ],
+
+  "dictionaries": [
+    {
+      "name": "default",
+      "createdAt": "",
+      "values": {
+        "Anthracite": "Dark Grey",
+        "Midnight Black": "Black",
+        "Mystic Silver": "Silver"
+      }
     }
   ]
 }
