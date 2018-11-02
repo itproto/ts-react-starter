@@ -1,9 +1,10 @@
 import { Store, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { RootState, rootReducer } from './root-reducer';
+import { callAPIMiddleware } from '@src/app/dux/middlewares/call-api-middleware';
 
 export function configureStore(initialState: RootState): Store<RootState> {
-  let middleware = applyMiddleware();
+  let middleware = applyMiddleware(callAPIMiddleware());
 
   if (process.env.NODE_ENV !== 'production') {
     middleware = composeWithDevTools(middleware);

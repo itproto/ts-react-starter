@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "json-server --port 9000 --watch data/db.json",
-    "quicktype": "quicktype  http://localhost:9000/comments -o temp/comments.ts --just-types --telemetry disable"
+    "start": "json-server --port 9000 --watch data/db.json"
   },
   "keywords": [],
   "author": "",

@@ -1,8 +1,13 @@
 import * as React from 'react';
 import './app.css';
+import { DictionaryDisplay } from '@src/components/dict/components';
 
 export class App extends React.Component<{}, {}> {
   render() {
-    return <div className="app">Hello</div>;
+    return (
+      <div className="app">
+        <DictionaryDisplay />
+      </div>
+    );
   }
 }
