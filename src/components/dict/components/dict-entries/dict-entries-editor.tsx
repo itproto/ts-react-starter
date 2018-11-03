@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DictValues, TKey } from '../@types/api';
+import { DictValues, TKey } from '../../@types/api';
 import './spreadsheet.module.css';
 import * as cx from 'classnames';
 import * as shortid from 'shortid';
@@ -60,7 +60,7 @@ const isFormReady = (editedValues: DictValues[], values?: DictValues[]) => {
 
 // Object.entries(values).filter();
 const defaultNewEntry = { from: '', to: '', id: 'new' };
-export class DictValuesEditor extends React.Component<
+export class DictEntriesEditor extends React.Component<
   IDictValuesProps,
   IState
 > {

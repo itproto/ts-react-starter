@@ -6,17 +6,12 @@ import { dictsSelector } from '../dux/dict-selectors';
 import { IDict, DictValues } from '../@types/api';
 import { fetchDictionary, updateDictionary } from '../dux/dict-actions';
 import './style.css';
-import { DictValuesEditor } from './dict-values-editor';
+import { DictEntriesEditor } from './dict-entries/dict-entries-editor';
+import { Wrapper } from '@src/common/components/wrapper/wrapper';
 
 type IState = {
   selectedDictIndex: number;
 };
-const Wrapper = ({ title, children }: any) => (
-  <div>
-    <h1>{title}</h1>
-    {children}
-  </div>
-);
 
 class DictionaryDisplayComponent extends React.Component<IProps, IState> {
   state: IState = {
@@ -63,7 +58,7 @@ class DictionaryDisplayComponent extends React.Component<IProps, IState> {
             <select value={selectedDict.name} onChange={this.selectDictionary}>
               {dicts.map(this.renderDictOption)}
             </select>
-            <DictValuesEditor
+            <DictEntriesEditor
               onSave={this.onSaveValues}
               values={selectedDict.values}
             />

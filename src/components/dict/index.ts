@@ -5,3 +5,5 @@ export {
 } from './dux/dict-reducer';
 
 export { reducerKey as dictReducerKey } from './dux/dict-config';
+
+export { DictionaryDisplay } from './components/dictionary-display';

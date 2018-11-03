@@ -4,13 +4,20 @@ import {
   dictReducerKey,
   dictReducer
 } from '@src/components/dict';
+import {
+  productsReducerKey,
+  productsInitialState,
+  productsReducer
+} from '@src/components/products';
 
 export type RootState = typeof initialRootState;
 
 export const initialRootState = {
-  [dictReducerKey]: dictInitialState
+  [dictReducerKey]: dictInitialState,
+  [productsReducerKey]: productsInitialState
 };
 
 export const rootReducer = combineReducers<RootState>({
-  [dictReducerKey]: dictReducer
+  [dictReducerKey]: dictReducer,
+  [productsReducerKey]: productsReducer
 });

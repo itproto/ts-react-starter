@@ -23,7 +23,8 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "quicktype:dict": "quicktype  http://localhost:9000/dictionaries -o src/components/dict/@types/api.ts --just-types --telemetry disable"
+    "quicktype:dict": "quicktype  http://localhost:9000/dictionaries -o src/components/dict/@types/api.ts --just-types --telemetry disable",
+    "quicktype:products": "quicktype  http://localhost:9000/products -o src/components/products/@types/api.ts --just-types --telemetry disable"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
