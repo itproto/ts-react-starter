@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "lodash": "^4.17.11",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
@@ -14,6 +15,7 @@
     "redux-actions": "^2.6.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "shortid": "^2.2.13",
     "typesafe-actions": "^2.0.4"
   },
   "scripts": {
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/classnames": "^2.2.6",
     "@types/jest": "^23.3.2",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.9.4",
@@ -35,6 +38,7 @@
     "@types/redux-actions": "^2.3.0",
     "@types/redux-thunk": "^2.1.0",
     "@types/reselect": "^2.2.0",
+    "@types/shortid": "0.0.29",
     "@types/webpack-env": "^1.13.6",
     "quicktype": "^15.0.146",
     "redux-devtools-extension": "^2.13.5",

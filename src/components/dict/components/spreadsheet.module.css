@@ -1,0 +1,36 @@
+.spreadsheet input {
+  border: 1px solid #999;
+  padding: 2px;
+}
+
+.spreadsheet input:hover {
+  background-color: #eee;
+}
+
+.spreadsheet input:focus {
+  background-color: #ccf;
+}
+.spreadsheet input.dirty {
+  background-color: green;
+}
+.spreadsheet input.invalid {
+  background-color: red;
+}
+.spreadsheet input:not(:focus) {
+  text-align: right;
+}
+
+.spreadsheet table {
+  border-collapse: collapse;
+}
+
+.spreadsheet td {
+  padding: 0;
+}
+
+.spreadsheet th {
+  background-color: #ccc;
+  padding: 1px 3px;
+  font-weight: bold;
+  text-align: center;
+}
