@@ -6,6 +6,7 @@ import * as shortid from 'shortid';
 
 export interface IDictValuesProps {
   values: DictValues[];
+  onSave: (editedValues: DictValues[]) => void;
 }
 
 type IState = {
@@ -31,6 +32,30 @@ const isDuplicateKey = (
 ) => {
   const maxLen = newEntry ? 0 : 1;
   return values && values.filter(e => e.from === from).length > maxLen;
+};
+
+const isFormDirty = (editedValues: DictValues[], values: DictValues[]) => {
+  if (editedValues.length !== values.length) {
+    return true;
+  }
+  return values.some(e => {
+    const match = editedValues.find(edited => e.id === edited.id);
+    return match === undefined || e.from !== match.from || e.to !== match.to;
+  });
+};
+
+const isFormValid = (editedValues: DictValues[]) =>
+  editedValues.every(
+    e =>
+      !isEmptyString(e.from) &&
+      !isEmptyString(e.to) &&
+      !isDuplicateKey(e.from, editedValues)
+  );
+
+const isFormReady = (editedValues: DictValues[], values?: DictValues[]) => {
+  return (
+    values && isFormDirty(editedValues, values) && isFormValid(editedValues)
+  );
 };
 
 // Object.entries(values).filter();
@@ -179,21 +204,35 @@ export class DictValuesEditor extends React.Component<
       </tr>
     );
   };
+
+  onSave = (event: any) => {
+    event.preventDefault();
+    this.props.onSave(this.state.editedValues);
+  };
+
   render() {
-    const { editedValues } = this.state;
+    const { editedValues, values } = this.state;
     return (
-      <table className="spreadsheet">
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {editedValues.map(entry => this.renderEntry(entry))}
-          {this.renderNewEntry()}
-        </tbody>
-      </table>
+      <div>
+        <table className="spreadsheet">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {editedValues.map(entry => this.renderEntry(entry))}
+            {this.renderNewEntry()}
+          </tbody>
+        </table>
+        <button
+          disabled={!isFormReady(editedValues, values)}
+          onClick={this.onSave}
+        >
+          Save
+        </button>
+      </div>
     );
   }
 }

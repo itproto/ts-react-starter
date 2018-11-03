@@ -3,8 +3,8 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from '@src/app/dux/root-reducer';
 import { dictsSelector } from '../dux/dict-selectors';
-import { IDict } from '../@types/api';
-import { fetchDictionary } from '../dux/dict-actions';
+import { IDict, DictValues } from '../@types/api';
+import { fetchDictionary, updateDictionary } from '../dux/dict-actions';
 import './style.css';
 import { DictValuesEditor } from './dict-values-editor';
 
@@ -26,6 +26,18 @@ class DictionaryDisplayComponent extends React.Component<IProps, IState> {
   componentDidMount() {
     this.props.fetchDictionary();
   }
+
+  onSaveValues = (editedValues: DictValues[]) => {
+    const { dicts } = this.props;
+
+    const { selectedDictIndex } = this.state;
+    const selectedDict = dicts[selectedDictIndex];
+
+    this.props.updateDictionary({
+      ...selectedDict,
+      values: editedValues
+    });
+  };
 
   selectDictionary = (event: any) => {
     this.setState({ selectedDictIndex: event.target.selectedIndex });
@@ -51,9 +63,12 @@ class DictionaryDisplayComponent extends React.Component<IProps, IState> {
             <select value={selectedDict.name} onChange={this.selectDictionary}>
               {dicts.map(this.renderDictOption)}
             </select>
-            <DictValuesEditor values={selectedDict.values} />
+            <DictValuesEditor
+              onSave={this.onSaveValues}
+              values={selectedDict.values}
+            />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Upload" />
         </form>
       </Wrapper>
     );
@@ -66,6 +81,7 @@ interface IStateToProps {
 }
 interface IDispatchToProps {
   fetchDictionary: () => void;
+  updateDictionary: (dict: IDict) => void;
 }
 interface IOwnProps {
   title?: string;
@@ -77,7 +93,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ fetchDictionary }, dispatch);
+  bindActionCreators({ fetchDictionary, updateDictionary }, dispatch);
 
 export const DictionaryDisplay = connect(
   mapStateToProps,
