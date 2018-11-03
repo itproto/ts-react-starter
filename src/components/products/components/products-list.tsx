@@ -27,10 +27,31 @@ class ProductsListComponent extends React.Component<IProps, IState> {
       return <Wrapper title={title}>Loading</Wrapper>;
     }
 
-    return <Wrapper title={title}>{products.map(this.renderProduct)}</Wrapper>;
+    return <Wrapper title={title}>{this.renderProducts(products)}</Wrapper>;
   }
 
-  renderProduct = (prod: IProduct) => <div key={prod.name}>{prod.name}</div>;
+  renderProducts = (products: IProduct[]) => {
+    return (
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Color</th>
+          </tr>
+        </thead>
+        <tbody>{products.map(this.renderProduct)}</tbody>
+      </table>
+    );
+  };
+
+  renderProduct = (prod: IProduct) => (
+    <tr key={prod.name}>
+      <td>{prod.name}</td>
+      <td>{prod.price}</td>
+      <td>{prod.color}</td>
+    </tr>
+  );
 }
 
 // #region @connect
