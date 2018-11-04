@@ -6,7 +6,7 @@ import {
   dictsSelector,
   selectedDictIndexSelector
 } from '../dux/dict-selectors';
-import { IDict, DictValues } from '../@types/api';
+import { IDict } from '../@types/api';
 import {
   fetchDictionary,
   updateDictionary,
@@ -31,11 +31,8 @@ class DictionaryDisplayComponent extends React.Component<IProps, IState> {
     this.props.fetchDictionary();
   }
 
-  onSaveValues = (editedValues: DictValues[]) => {
-    this.props.updateDictionary({
-      ...this.selectedDict,
-      values: editedValues
-    });
+  updateDictionaryHandler = (dict: IDict) => {
+    this.props.updateDictionary(dict);
   };
 
   selectHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -107,11 +104,10 @@ class DictionaryDisplayComponent extends React.Component<IProps, IState> {
 
           {this.selectedDict && (
             <DictEntriesEditor
-              onSave={this.onSaveValues}
+              onSave={this.updateDictionaryHandler}
               dictionary={this.selectedDict}
             />
           )}
-          <input type="submit" value="Upload" />
         </form>
       </Wrapper>
     );

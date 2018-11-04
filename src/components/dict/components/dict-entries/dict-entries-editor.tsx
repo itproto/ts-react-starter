@@ -12,7 +12,7 @@ import {
 
 export interface IDictValuesProps {
   dictionary: IDict;
-  onSave: (editedValues: DictValues[]) => void;
+  onSave: (dict: IDict) => void;
 }
 
 type IState = {
@@ -174,7 +174,13 @@ export class DictEntriesEditor extends React.Component<
 
   onSave = (event: any) => {
     event.preventDefault();
-    this.props.onSave(this.state.editedValues);
+    const { dictionary } = this.props;
+    const { editedName, editedValues } = this.state;
+    this.props.onSave({
+      ...dictionary,
+      name: editedName!,
+      values: editedValues
+    });
   };
 
   nameChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +195,9 @@ export class DictEntriesEditor extends React.Component<
       <div className="form-group">
         <label>Name</label>
         <input
-          className="form-control"
+          className={cx('form-control', {
+            invalid: editedName !== undefined && isEmptyString(editedName)
+          })}
           value={
             editedName === undefined ? this.props.dictionary.name : editedName
           }
@@ -200,7 +208,7 @@ export class DictEntriesEditor extends React.Component<
   };
 
   render() {
-    const { editedValues } = this.state;
+    const { editedValues, editedName } = this.state;
     return (
       <div>
         {this.renderName()}
@@ -216,12 +224,19 @@ export class DictEntriesEditor extends React.Component<
             {this.renderNewEntry()}
           </tbody>
         </table>
-        <button
-          disabled={!isFormReady(editedValues, this.props.dictionary.values)}
-          onClick={this.onSave}
-        >
-          Save
-        </button>
+
+        <div className="pull-right">
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={
+              !isFormReady(editedName, editedValues, this.props.dictionary)
+            }
+            onClick={this.onSave}
+          >
+            Save
+          </button>
+        </div>
       </div>
     );
   }

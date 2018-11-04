@@ -1,5 +1,6 @@
 import { DictValues, TKey } from '../..';
 import * as shortid from 'shortid';
+import { IDict } from '../../@types/api';
 
 export const uid = () => shortid.generate();
 
@@ -25,19 +26,22 @@ export const isDuplicateKey = (
 };
 
 export const isFormDirty = (
+  editedName: string,
   editedValues: DictValues[],
-  values: DictValues[]
+  dict: IDict
 ) => {
-  if (editedValues.length !== values.length) {
+  if (editedName !== dict.name || editedValues.length !== dict.values.length) {
     return true;
   }
-  return values.some(e => {
+
+  return dict.values.some(e => {
     const match = editedValues.find(edited => e.id === edited.id);
     return match === undefined || e.from !== match.from || e.to !== match.to;
   });
 };
 
-export const isFormValid = (editedValues: DictValues[]) =>
+export const isFormValid = (editedName: string, editedValues: DictValues[]) =>
+  !isEmptyString(editedName) &&
   editedValues.every(
     e =>
       !isEmptyString(e.from) &&
@@ -46,10 +50,14 @@ export const isFormValid = (editedValues: DictValues[]) =>
   );
 
 export const isFormReady = (
+  editedName: string | undefined,
   editedValues: DictValues[],
-  values?: DictValues[]
+  dict: IDict
 ) => {
   return (
-    values && isFormDirty(editedValues, values) && isFormValid(editedValues)
+    editedName &&
+    dict &&
+    isFormDirty(editedName, editedValues, dict) &&
+    isFormValid(editedName, editedValues)
   );
 };

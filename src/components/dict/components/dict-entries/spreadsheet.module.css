@@ -1,5 +1,6 @@
 .spreadsheet {
   width: 100%;
+  margin: 0.5rem 0;
 }
 .spreadsheet input {
   border: 1px solid #999;
@@ -14,11 +15,11 @@
 .spreadsheet input:focus {
   background-color: #ccf;
 }
-.spreadsheet input.dirty {
-  background-color: green;
+input.dirty {
+  background-color: #28a745 !important;
 }
-.spreadsheet input.invalid {
-  background-color: red;
+input.invalid {
+  background-color: #dc3545 !important;
 }
 .spreadsheet input:not(:focus) {
   text-align: right;
@@ -38,4 +39,8 @@
   padding: 1px 3px;
   font-weight: bold;
   text-align: center;
+}
+
+.pull-right {
+  float: right;
 }

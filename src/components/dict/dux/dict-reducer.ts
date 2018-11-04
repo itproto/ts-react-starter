@@ -50,7 +50,7 @@ export const reducer = (
       return {
         ...state,
         dicts: state.dicts.map(d => {
-          if (updatedDict.name === d.name) {
+          if (updatedDict.id === d.id) {
             return { ...updatedDict };
           }
           return d;
