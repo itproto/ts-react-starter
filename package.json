@@ -44,5 +44,11 @@
     "quicktype": "^15.0.146",
     "redux-devtools-extension": "^2.13.5",
     "typescript": "^3.0.3"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "@src(.*)$": "<rootDir>/src/$1",
+      "^react-native$": "react-native-web"
+    }
   }
 }

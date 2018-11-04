@@ -6,7 +6,8 @@ import { IDict } from '../@types/api';
 
 // #region ACTIONS
 export const GET_DICTIONARY = reducerKey; // reuse for simplicity
-export const UPDATE_DICTIONARY = 'UPDATE'; // reuse for simplicity
+export const UPDATE_DICTIONARY = `${reducerKey}/UPDATE`;
+export const SELECT_DICTIONARY = `${reducerKey}/SELECT`;
 const endpoint = 'dictionaries';
 // #endregion
 
@@ -15,7 +16,10 @@ export const updateDictionary = (payload: IDict): IAction<IDict> => ({
   type: UPDATE_DICTIONARY,
   payload
 });
-
+export const selectDictionaryIndex = (payload: number): IAction<number> => ({
+  type: SELECT_DICTIONARY,
+  payload
+});
 export const fetchDictionary = (): ICallApiAction => ({
   baseFetchActionType: GET_DICTIONARY,
   callAPI: () => api.get(endpoint)

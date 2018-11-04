@@ -5,24 +5,34 @@ import {
 } from '@src/app/dux/middlewares/call-api-middleware';
 import {
   GET_DICTIONARY,
-  UPDATE_DICTIONARY
+  UPDATE_DICTIONARY,
+  SELECT_DICTIONARY
 } from '@src/components/dict/dux/dict-actions';
 import { IAction } from '@src/app/dux';
 
-export interface IDictState {
+export interface ReducerState {
   dicts: IDict[];
+  ui: {
+    selectedDictIndex?: number;
+  };
 }
 
-export const initialState: IDictState = {
-  dicts: []
+export const initialState: ReducerState = {
+  dicts: [],
+  ui: {
+    selectedDictIndex: undefined
+  }
 };
 
-type ReducerAction = IResponseAction<IDict[]> | IAction<IDict>;
+type ReducerAction =
+  | IResponseAction<IDict[]>
+  | IAction<IDict>
+  | IAction<number>;
 
 export const reducer = (
   state = initialState,
   action: ReducerAction
-): IDictState => {
+): ReducerState => {
   switch (action.type) {
     case getActionFor(GET_DICTIONARY):
       const { response } = action;
@@ -40,6 +50,15 @@ export const reducer = (
           }
           return d;
         })
+      };
+    case SELECT_DICTIONARY:
+      const { payload: selectedDictIndex } = action;
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          selectedDictIndex
+        }
       };
   }
   return state;

@@ -1,8 +1,14 @@
 import * as React from 'react';
-import { DictValues, TKey } from '../../@types/api';
+import { DictValues } from '../../@types/api';
 import './spreadsheet.module.css';
 import * as cx from 'classnames';
-import * as shortid from 'shortid';
+import {
+  isEmptyString,
+  isDuplicateKey,
+  isFormReady,
+  uid,
+  isDirty
+} from './validation';
 
 export interface IDictValuesProps {
   values: DictValues[];
@@ -14,51 +20,7 @@ type IState = {
   values?: DictValues[];
   newEntry: DictValues;
 };
-const uid = () => shortid.generate();
-const isEmptyString = (s: string) => s.trim() === '';
-const isDirtyValue = (entry: DictValues, values: DictValues[]) => {
-  const originalEntry = values.find(e => e.id === entry.id);
-  return originalEntry === undefined || originalEntry.to !== entry.to;
-};
-const isDirtyKey = (entry: DictValues, values: DictValues[]) => {
-  const originalEntry = values.find(e => e.id === entry.id);
-  return originalEntry === undefined || originalEntry.from !== entry.from;
-};
 
-const isDuplicateKey = (
-  from: TKey,
-  values?: DictValues[],
-  newEntry?: boolean
-) => {
-  const maxLen = newEntry ? 0 : 1;
-  return values && values.filter(e => e.from === from).length > maxLen;
-};
-
-const isFormDirty = (editedValues: DictValues[], values: DictValues[]) => {
-  if (editedValues.length !== values.length) {
-    return true;
-  }
-  return values.some(e => {
-    const match = editedValues.find(edited => e.id === edited.id);
-    return match === undefined || e.from !== match.from || e.to !== match.to;
-  });
-};
-
-const isFormValid = (editedValues: DictValues[]) =>
-  editedValues.every(
-    e =>
-      !isEmptyString(e.from) &&
-      !isEmptyString(e.to) &&
-      !isDuplicateKey(e.from, editedValues)
-  );
-
-const isFormReady = (editedValues: DictValues[], values?: DictValues[]) => {
-  return (
-    values && isFormDirty(editedValues, values) && isFormValid(editedValues)
-  );
-};
-
-// Object.entries(values).filter();
 const defaultNewEntry = { from: '', to: '', id: 'new' };
 export class DictEntriesEditor extends React.Component<
   IDictValuesProps,
@@ -137,11 +99,11 @@ export class DictEntriesEditor extends React.Component<
   renderEntry = (entry: DictValues) => {
     const { from, to, id } = entry;
     return (
-      <tr key={id} className="keyValue">
+      <tr key={id}>
         <td>
           <input
             className={cx({
-              dirty: isDirtyKey(entry, this.props.values),
+              dirty: isDirty(entry, this.props.values),
               invalid:
                 isEmptyString(from) ||
                 isDuplicateKey(from, this.state.editedValues)
@@ -153,7 +115,7 @@ export class DictEntriesEditor extends React.Component<
         <td>
           <input
             className={cx({
-              dirty: isDirtyValue(entry, this.props.values),
+              dirty: isDirty(entry, this.props.values),
               invalid: isEmptyString(to)
             })}
             value={to}
@@ -185,7 +147,7 @@ export class DictEntriesEditor extends React.Component<
     const entry = this.state.newEntry;
     const { from, to, id } = entry;
     return (
-      <tr key={id} className="keyValue">
+      <tr key={id}>
         <td>
           <input
             className={cx({

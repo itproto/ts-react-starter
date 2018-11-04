@@ -1,5 +1,9 @@
+.spreadsheet {
+  width: 100%;
+}
 .spreadsheet input {
   border: 1px solid #999;
+  width: 100%;
   padding: 2px;
 }
 
@@ -26,6 +30,7 @@
 
 .spreadsheet td {
   padding: 0;
+  font-weight: normal;
 }
 
 .spreadsheet th {
