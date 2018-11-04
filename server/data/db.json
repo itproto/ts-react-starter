@@ -19,6 +19,7 @@
 
   "dictionaries": [
     {
+      "id": "1",
       "name": "default",
       "createdAt": "",
       "values": [
@@ -28,6 +29,7 @@
       ]
     },
     {
+      "id": "2",
       "name": "custom",
       "createdAt": "",
       "values": [

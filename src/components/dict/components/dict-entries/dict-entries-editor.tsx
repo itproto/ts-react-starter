@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DictValues } from '../../@types/api';
+import { DictValues, IDict } from '../../@types/api';
 import './spreadsheet.module.css';
 import * as cx from 'classnames';
 import {
@@ -11,13 +11,14 @@ import {
 } from './validation';
 
 export interface IDictValuesProps {
-  values: DictValues[];
+  dictionary: IDict;
   onSave: (editedValues: DictValues[]) => void;
 }
 
 type IState = {
   editedValues: DictValues[];
-  values?: DictValues[];
+  editedName?: string;
+  dictionary?: IDict;
   newEntry: DictValues;
 };
 
@@ -28,19 +29,22 @@ export class DictEntriesEditor extends React.Component<
 > {
   state: IState = {
     editedValues: [],
-    values: undefined,
-    newEntry: { ...defaultNewEntry }
+    dictionary: undefined,
+    newEntry: { ...defaultNewEntry },
+    editedName: undefined
   };
 
   static getDerivedStateFromProps(
     nextProps: IDictValuesProps,
     prevState: IState
   ) {
-    const newValues = nextProps.values;
-    if (newValues !== prevState.values) {
+    const newDict = nextProps.dictionary;
+    if (newDict !== prevState.dictionary) {
       return {
-        values: newValues,
-        editedValues: newValues
+        dictionary: newDict,
+        name: newDict.name,
+        editedName: newDict.name,
+        editedValues: [...newDict.values]
       };
     }
     return null;
@@ -98,12 +102,13 @@ export class DictEntriesEditor extends React.Component<
 
   renderEntry = (entry: DictValues) => {
     const { from, to, id } = entry;
+    const { values } = this.props.dictionary;
     return (
       <tr key={id}>
         <td>
           <input
             className={cx({
-              dirty: isDirty(entry, this.props.values),
+              dirty: isDirty(entry, values),
               invalid:
                 isEmptyString(from) ||
                 isDuplicateKey(from, this.state.editedValues)
@@ -115,7 +120,7 @@ export class DictEntriesEditor extends React.Component<
         <td>
           <input
             className={cx({
-              dirty: isDirty(entry, this.props.values),
+              dirty: isDirty(entry, values, 'to'),
               invalid: isEmptyString(to)
             })}
             value={to}
@@ -172,10 +177,33 @@ export class DictEntriesEditor extends React.Component<
     this.props.onSave(this.state.editedValues);
   };
 
+  nameChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      editedName: event.target.value
+    });
+  };
+
+  renderName = () => {
+    const { editedName } = this.state;
+    return (
+      <div className="form-group">
+        <label>Name</label>
+        <input
+          className="form-control"
+          value={
+            editedName === undefined ? this.props.dictionary.name : editedName
+          }
+          onChange={this.nameChangeHandler}
+        />
+      </div>
+    );
+  };
+
   render() {
-    const { editedValues, values } = this.state;
+    const { editedValues } = this.state;
     return (
       <div>
+        {this.renderName()}
         <table className="spreadsheet">
           <thead>
             <tr>
@@ -189,7 +217,7 @@ export class DictEntriesEditor extends React.Component<
           </tbody>
         </table>
         <button
-          disabled={!isFormReady(editedValues, values)}
+          disabled={!isFormReady(editedValues, this.props.dictionary.values)}
           onClick={this.onSave}
         >
           Save

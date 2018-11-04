@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 const stateSelector = (state: RootState) => state[reducerKey];
 export const dictsSelector = (state: RootState) => stateSelector(state).dicts;
 
-const selectedDictIndexSelector = (state: RootState) =>
+export const selectedDictIndexSelector = (state: RootState) =>
   stateSelector(state).ui.selectedDictIndex;
 
 export const selectedDictionarySelector = createSelector(

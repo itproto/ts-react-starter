@@ -1,4 +1,5 @@
 export interface IDict {
+  id: string;
   name: string;
   values: DictValues[];
 }
