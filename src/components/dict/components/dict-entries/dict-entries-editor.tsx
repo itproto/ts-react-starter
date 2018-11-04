@@ -23,16 +23,17 @@ type IState = {
 };
 
 const defaultNewEntry = { from: '', to: '', id: 'new' };
+const initialState = {
+  editedValues: [],
+  dictionary: undefined,
+  newEntry: { ...defaultNewEntry },
+  editedName: undefined
+};
 export class DictEntriesEditor extends React.Component<
   IDictValuesProps,
   IState
 > {
-  state: IState = {
-    editedValues: [],
-    dictionary: undefined,
-    newEntry: { ...defaultNewEntry },
-    editedName: undefined
-  };
+  state: IState = initialState;
 
   static getDerivedStateFromProps(
     nextProps: IDictValuesProps,
@@ -48,6 +49,15 @@ export class DictEntriesEditor extends React.Component<
       };
     }
     return null;
+  }
+
+  componentDidUpdate(prevProps: IDictValuesProps) {
+    if (prevProps.dictionary !== this.props.dictionary) {
+      this.setState({
+        // reset all state on dictionary state, add warning?
+        ...initialState
+      });
+    }
   }
 
   onChangeValue = (entry: DictValues) => (
@@ -172,7 +182,7 @@ export class DictEntriesEditor extends React.Component<
     );
   };
 
-  onSave = (event: any) => {
+  onApplyHandler = (event: any) => {
     event.preventDefault();
     const { dictionary } = this.props;
     const { editedName, editedValues } = this.state;
@@ -232,9 +242,9 @@ export class DictEntriesEditor extends React.Component<
             disabled={
               !isFormReady(editedName, editedValues, this.props.dictionary)
             }
-            onClick={this.onSave}
+            onClick={this.onApplyHandler}
           >
-            Save
+            Apply Changes
           </button>
         </div>
       </div>
