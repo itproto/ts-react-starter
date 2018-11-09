@@ -2,24 +2,13 @@
 
 ## Quick start
 
-1. Start local json server with initial data
+1. Start local json server and client
 
 ```sh
-cd server
 npm start
 ```
 
-Check for server running http://localhost:9000/
-
-2. Start client code.
-   Navigate to root dir
-
-```sh
-cd ../
-npm start
-```
-
-3. Run tests
+2. Run tests
 
 ```sh
 npm run start
