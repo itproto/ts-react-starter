@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1",
+    "name": "default",
+    "createdAt": "",
+    "values": [
+      {
+        "id": "1",
+        "from": "Anthracite",
+        "to": "Dark Grey"
+      },
+      {
+        "id": "2",
+        "from": "Midnight Black",
+        "to": "Black"
+      },
+      {
+        "id": "3",
+        "from": "Mystic Silver",
+        "to": "Silver"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "custom",
+    "createdAt": "",
+    "values": [
+      {
+        "id": "1",
+        "from": "Anthracite",
+        "to": "1"
+      },
+      {
+        "id": "2",
+        "from": "Midnight Black",
+        "to": "2"
+      },
+      {
+        "id": "3",
+        "from": "Mystic Silver",
+        "to": "3"
+      }
+    ]
+  }
+]

@@ -4,7 +4,7 @@ import { reducerKey } from './prod-config';
 
 // #region ACTIONS
 export const GET_PRODUCTS = reducerKey; // reuse for simplicity
-const endpoint = 'products';
+const endpoint = 'products.json';
 // #endregion
 
 // #region action-creators

@@ -11,7 +11,7 @@ export const UPDATE_DICTIONARY = `${reducerKey}/UPDATE`;
 export const SELECT_DICTIONARY = `${reducerKey}/SELECT`;
 export const REMOVE_DICTIONARY = `${reducerKey}/REMOVE`;
 export const ADD_DICTIONARY = `${reducerKey}/ADD`;
-const endpoint = 'dictionaries';
+const endpoint = 'dictionaries.json';
 // #endregion
 
 // #region action-creators
